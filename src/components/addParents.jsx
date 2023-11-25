@@ -58,8 +58,8 @@ export const AddParents = () => {
     }
   return (
     <>
-    <Container className='bg-dark text-white pt-3' style={{ border: "2px solid black", borderRadius: "12px" }}>
-    <Form className='mb-3'>
+    <Container className='text-white pt-3 py-3' style={{fontFamily: "Open Sans", backgroundColor: "#e9ecef", color:"black" , borderRadius: "12px" }}>
+    <Form className='mb-3' style={{color:"black"}}>
                 <Form.Label> Get Parent Id for Student</Form.Label>
                     <Row>
                         <Col className='col-8'>
@@ -67,11 +67,11 @@ export const AddParents = () => {
                             <Form.Control type='number' onChange={(e)=>{setRoll(e.target.value)}} placeholder="Enter Student Roll No"/>
                         </Col>
                         <Col>
-                      { !show ?  <Button onClick={getStdId} style={{marginTop:"30px"}}>Get Id</Button> : (ParentId==="" ? <Spinner animation="border" variant="primary" style={{marginTop:"30px"}}/>: <Button style={{marginTop:"30px"}}>{ParentId}</Button>)}
+                      { !show ?  <Button onClick={getStdId} style={{marginTop:"30px", backgroundColor:"#49b6ff" }}>Get Id</Button> : (ParentId==="" ? <Spinner animation="border" variant="primary" style={{marginTop:"30px"}}/>: <Button style={{marginTop:"30px" ,backgroundColor:"#49b6ff" }}>{ParentId}</Button>)}
                         </Col>
                     </Row>
                 </Form>
-    <Form className='mb-3'>
+    <Form className='mb-3' style={{color:"black"}}>
                 <Form.Label> <h4>Parents Data</h4></Form.Label>
                     <Row>
                         <Col>
@@ -81,7 +81,7 @@ export const AddParents = () => {
                     </Row>
                 </Form>
 
-                <Form className='mb-3'>
+                <Form className='mb-3' style={{color:"black"}}>
 
                     <Row>
                         <Col className='col-4'>
@@ -99,7 +99,7 @@ export const AddParents = () => {
                     </Row>
                 </Form>
 
-                <Form className='mb-3'>
+                <Form className='mb-3' style={{color:"black"}}>
 
                     <Row>
                         <Col className='col-4'>
@@ -111,7 +111,7 @@ export const AddParents = () => {
                             <Form.Control placeholder="Enter Mobile Number" onChange={(e) => { setpMobnum(e.target.value) }} />
                         </Col>
                     </Row>
-                </Form> <Form className='mb-3'>
+                </Form> <Form className='mb-3' style={{color:"black"}}>
 
                     <Row>
                         <Col className='col-4'>
@@ -134,7 +134,7 @@ export const AddParents = () => {
                             </Form.Select>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className='mb-3'>
 
                     <Col className='col-10'>
                             <Form.Label>Email</Form.Label>
@@ -143,7 +143,7 @@ export const AddParents = () => {
                        
                         <Col>
                         <Form.Label>  </Form.Label>
-                            <Button onClick={updateParentData} style={{marginTop:"32px"}}>Update</Button>
+                            <Button onClick={updateParentData} style={{marginTop:"32px", backgroundColor:"#49b6ff" }}>Update</Button>
                         </Col>
                     </Row>
                 </Form> 

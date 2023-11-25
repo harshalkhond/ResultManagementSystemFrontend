@@ -125,8 +125,8 @@ export const AddStudent = () => {
     return (
 
         <>
-            <Container className='bg-dark text-white pt-3' style={{ border: "2px solid black", borderRadius: "12px" }}>
-                <Form className='mb-5'>
+            <Container className='text-white py-3'  style={{fontFamily: "Open Sans", backgroundColor: "#e9ecef" , borderRadius: "12px" }}>
+                <Form className='mb-5' style={{color:"black"}}>
                     <Row>
                         <Col xs={7}>
                             <Form.Label>Username</Form.Label>
@@ -145,7 +145,7 @@ export const AddStudent = () => {
                 </Form>
 
 
-                <Form className='mb-3'>
+                <Form className='mb-3' style={{color:"black"}}>
                     <Form.Label> <h4> Student Data </h4></Form.Label>
                     <Row>
                         <Col className='col-4'>
@@ -163,7 +163,7 @@ export const AddStudent = () => {
                     </Row>
                 </Form>
 
-                <Form className='mb-3'>
+                <Form className='mb-3' style={{color:"black"}}>
 
                     <Row>
                         <Col className='col-4'>
@@ -181,7 +181,7 @@ export const AddStudent = () => {
                     </Row>
                 </Form>
 
-                <Form className='mb-3'>
+                <Form className='mb-3' style={{color:"black"}}>
 
                     <Row>
                         <Col className='col-4'>
@@ -197,7 +197,8 @@ export const AddStudent = () => {
                             <Form.Control placeholder="Enter Parent Id" onChange={(e) => { setParentId(e.target.value) }} />
                         </Col>
                     </Row>
-                </Form> <Form className='mb-3'>
+                </Form> 
+                <Form className='mb-3' style={{color:"black"}}>
 
                     <Row>
                         <Col className='col-4'>
@@ -251,13 +252,14 @@ export const AddStudent = () => {
                     </Row>
                     {show ?
                         <>
-                        <Row className='mt-3'>
-                        <Col className='col-2'>
-                        <Badge bg="primary">Subjects</Badge>
-                        </Col>
-                        {coursesub.map((key)=>{
-                            return (<Col className='col-2'> <Badge bg="primary">{key.sub_name}</Badge> </Col>)})
-                        }</Row></> : <></>}
+                            <Row className='mt-3'>
+                                <Col className='col-2'>
+                                    <Badge bg="primary">Subjects</Badge>
+                                </Col>
+                                {coursesub.map((key) => {
+                                    return (<Col className='col-2'> <Badge bg="primary">{key.sub_name}</Badge> </Col>)
+                                })
+                                }</Row></> : <></>}
                     <Row>
                         <Col>
                             <Form.Label>  </Form.Label>

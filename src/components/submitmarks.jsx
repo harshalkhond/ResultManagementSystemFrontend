@@ -1,9 +1,10 @@
 import React from 'react'
-import { Row,Col, Form, Container } from 'react-bootstrap'
-import { useEffect , useState } from 'react'
+import { Row, Col, Form, Container } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 import { API } from '../API/apis.ts'
 import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 export const Submitmarks = () => {
     const apis = new API();
     const [stddata, setStdData] = useState({});
@@ -13,7 +14,7 @@ export const Submitmarks = () => {
     const [marks, setMarks] = useState({});
     const [loading, setLoading] = useState(false);
     const [roll, setRoll] = useState(true);
-    const [showcourse,setShowCourse]=useState(false);
+    const [showcourse, setShowCourse] = useState(false);
     //console.log(stddata);
     //console.log(courseid);
     // useEffect(() => { 
@@ -48,8 +49,8 @@ export const Submitmarks = () => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [])
     //console.log(subjectdata);
-    let c_id =0;
-    const getSubjectsData = async ()=>{
+    let c_id = 0;
+    const getSubjectsData = async () => {
         try {
             const { data: response } = await apis.fetchStudentData(roll);
             setStdData(response.students[0]);
@@ -62,32 +63,32 @@ export const Submitmarks = () => {
         try {
             const { data: response } = await apis.fetchSubjects(c_id);
             let arr = []
-            let subdata=subjectdata;
-            response.students.map((key)=>{
-                subdata[key.sub_name]=key.sub_id;
+            let subdata = subjectdata;
+            response.students.map((key) => {
+                subdata[key.sub_name] = key.sub_id;
                 arr.push(key.sub_name);
                 console.log(subdata);
             })
-            let ept=[]
+            let ept = []
             setSubjectData(subdata);
-            setSubject([...ept,...arr]);
+            setSubject([...ept, ...arr]);
             //console.log(response.students)
         } catch (error) {
             //console.error(error.message);
         }
         setShowCourse(true);
     }
-    
-    const handleclick = ()=>{
+
+    const handleclick = () => {
         //console.log(marks);
         let marksdata = [];
         console.log(subjectdata);
-        for (let x in marks){
+        for (let x in marks) {
             marksdata.push({
-                "sub_id":subjectdata[x],
-                "std_id":roll,
-                "marks":marks[x],
-                "sub_name":x
+                "sub_id": subjectdata[x],
+                "std_id": roll,
+                "marks": marks[x],
+                "sub_name": x
             })
         }
         apis.saveSubjectMarks(marksdata);
@@ -95,57 +96,56 @@ export const Submitmarks = () => {
     }
     console.log(stddata);
     console.log(courseid);
-  return (
-    <>{ !loading ?
-    <Container className='bg-dark text-white pt-3' style={{ border: "2px solid black", borderRadius: "12px" }}>
-    <Form className='mb-5'>
-        <Row className='mb-2'>
-            <Col>
-                <Form.Label>Roll No</Form.Label>
-                <Form.Control placeholder='Roll no' onChange={(e)=>{setRoll(e.target.value)}}/>
-            </Col>
-            <Col>{
-                showcourse ? <> <Form.Label>Course</Form.Label> <br />
-                <Button>{courseid}</Button></> :<><br /><Button className='mt-2' onClick={getSubjectsData}>Get Subjects</Button></> 
-            }
-            </Col>
-        </Row> <hr />
-        { showcourse?
-            <>
-        <Row className='mt-4 mb-3'>
-            
-            <Col className='text-center'>
-                <Form.Label>Subject</Form.Label>
-            </Col>
-            <Col className='text-center'>
-                <Form.Label>Marks</Form.Label>
-            </Col>
-            <Col></Col>
-        </Row>
-       
-        {subject.map((key)=>{ 
-            return(
-                <Row className='mb-2'>
+    return (
+        <>{!loading ?
+            <Container className='py-3' style={{ fontFamily: "Open Sans", backgroundColor: "#e9ecef", borderRadius: "12px" }}>
+                <Form className='mb-2'>
+                    <Row className='mb-2'>
+                        <Col>
+                            <Form.Label>Roll No</Form.Label>
+                            <Form.Control placeholder='Roll no' onChange={(e) => { setRoll(e.target.value) }} />
+                        </Col>
+                        <Col>
+                            <Form.Label></Form.Label> <br />
+                            <Button className='mt-2' style={{backgroundColor:"#49b6ff"}} onClick={getSubjectsData}>Get Subjects</Button>
 
-                <Col className='mt-2 text-center'>
-                    <Form.Label>{key}</Form.Label>
-                  </Col>
-                <Col>
-                    <Form.Control type='number' placeholder='Enter marks' onChange={(e)=>{let x=marks; x[key]=parseInt(e.target.value); setMarks(x);}}/>
-                </Col>
-                <Col></Col>
-            </Row>)
-        })
-        }
-        <Row>
-            <Col className='col-2'></Col>
-            <Col>
-                <Button className='mt-3'onClick={handleclick}>Submit</Button>
-            </Col>
-        </Row></>:<></>
-}
-    </Form>
-    </Container>:<Spinner animation="border" variant="primary" />
-}</>
-  )
+                        </Col>
+                    </Row> <hr />
+                    {showcourse ?
+                        <>
+                            
+                            <Row>
+                                <Col>
+                                    <Table>
+                                        <thead>
+                                            <tr>
+                                                <th>Sr no</th>
+                                                <th>Subject</th>
+                                                <th>Marks Obtained</th>
+                                                <th>Total Marks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {subject.map((key, i) => (<tr>
+                                                <td>{i + 1}</td>
+                                                <td>{key}</td>
+                                                <td><Form.Control type='number' placeholder='Enter marks' onChange={(e) => { let x = marks; x[key] = parseInt(e.target.value); setMarks(x); }} /></td>
+                                                <td>100 </td>
+                                            </tr>
+                                            ))}
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className='col-2'></Col>
+                                <Col>
+                                    <Button className='mt-3'  style={{backgroundColor:"#49b6ff"}} onClick={handleclick}>Submit</Button>
+                                </Col>
+                            </Row></> : <></>
+                    }
+                </Form>
+            </Container> : <Spinner animation="border" variant="primary" />
+        }</>
+    )
 }

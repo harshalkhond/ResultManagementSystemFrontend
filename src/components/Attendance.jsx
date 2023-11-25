@@ -24,8 +24,8 @@ export const Attendance = () => {
         })
     }
   return (
-    <Container>
-    <Form className='bg-dark px-3 py-3' style={{border:"2px solid black", borderRadius:"8px"}}>
+    <Container >
+    <Form className='px-3 py-3' style={{fontFamily: "Open Sans", backgroundColor: "#e9ecef", color:"black" , borderRadius: "12px" }}>
             
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridEmail">

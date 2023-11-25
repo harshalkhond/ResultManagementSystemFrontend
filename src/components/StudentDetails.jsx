@@ -57,7 +57,7 @@ export const StudentDetails = (state) => {
           <Form.Control placeholder="Enter Roll No"  onChange={(e)=>{ setRoll(e.target.value) }}/>
         </Col>
         <Col className='col-4'>
-        <Button onClick={fetchData}>Search</Button>
+        <Button style={{backgroundColor:"#49b6ff"}} onClick={fetchData}>Search</Button>
         </Col>
       </Row>
     </Form>

@@ -16,6 +16,10 @@ export class API{
     private validateurl = Baseurl + 'validate'
     private teachersurl = Baseurl + 'teachers?roll='
     private parentsurl = Baseurl + 'parents?roll='
+    private noticeurl = Baseurl + 'notice?cid='
+    private postnoticeurl = Baseurl + 'notice'
+    private posttaskurl = Baseurl + 'task'
+    private taskurl = Baseurl + 'task?cid='
     
     public fetchStudentData = (roll: string | number)=>{ 
           return axios.get(this.studentdata+roll);
@@ -59,4 +63,16 @@ export class API{
             public getParentsData = (roll: string | number)=>{ 
                 return axios.get(this.parentsurl+roll);
                 }
+        public getNotices = (cid: string | number)=>{ 
+            return axios.get(this.noticeurl+cid);
+            }
+        public postNotices = (data)=>{ 
+            return axios.post(this.postnoticeurl,data);
+            }
+        public getTasks = (cid: string | number)=>{ 
+            return axios.get(this.taskurl+cid);
+            }
+        public postTasks = (data)=>{ 
+            return axios.post(this.posttaskurl , data);
+            }
     }

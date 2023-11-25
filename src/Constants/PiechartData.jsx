@@ -1,13 +1,14 @@
 export const options = {
-    is3D: true,
-    chartArea: { width: 390, height: 200 }
+    chartArea: { width: 390, height: 240 },
+    colors: ['#ff477e', '#49b6ff']
+    
 };
 
 
 export const baroptions = {
     chart: {
-        is3D: true,
         title: "Marks as per Examination",
-        chartArea: { width: 390, height: 200 }
+        chartArea: { width: 390, height: 240 },
+        colors: ['#9ba9ff']
     },
 };
