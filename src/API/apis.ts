@@ -1,5 +1,10 @@
 import { Baseurl } from "../Constants/urls";
 import axios from "axios";
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.withCredentials = true;
+
 export class API{
     private studentdata  = Baseurl+'students?roll=';
     private substudentdata  = Baseurl+'students';
@@ -16,9 +21,11 @@ export class API{
     private validateurl = Baseurl + 'validate'
     private teachersurl = Baseurl + 'teachers?roll='
     private parentsurl = Baseurl + 'parents?roll='
+    private postparentsurl = Baseurl + 'parents'
     private noticeurl = Baseurl + 'notice?cid='
     private postnoticeurl = Baseurl + 'notice'
     private posttaskurl = Baseurl + 'task'
+    private registerurl = Baseurl + 'register'
     private taskurl = Baseurl + 'task?cid='
     
     public fetchStudentData = (roll: string | number)=>{ 
@@ -49,7 +56,7 @@ export class API{
         return axios.get(this.fetchsubjectsurl+courseid);
         }
     public login = (data)=>{ 
-        return axios.post(this.tokenurl,data);
+        return axios.post(this.loginurl,data);
         }
         public saveToken = (data)=>{ 
             return axios.post(this.gettokenurl,data);
@@ -74,5 +81,11 @@ export class API{
             }
         public postTasks = (data)=>{ 
             return axios.post(this.posttaskurl , data);
+            }
+            public postParentsData = (data)=>{ 
+                return axios.post(this.postparentsurl , data);
+                }
+        public registerUser = (data)=>{ 
+            return axios.post(this.registerurl , data);
             }
     }

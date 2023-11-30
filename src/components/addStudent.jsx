@@ -36,6 +36,7 @@ export const AddStudent = () => {
     const apis = new API();
 
     useEffect(() => {
+        
         const fetchData = async () => {
 
             let teacheropt = "<option key='student' value='select'>Select</option>";

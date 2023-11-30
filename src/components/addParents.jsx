@@ -28,7 +28,7 @@ export const AddParents = () => {
                 "dob":pdob,
                 "phone":pphnum,
                 "mobile":pmobnum,
-                "p_id":ParentId,
+                "pr_id":ParentId,
                 "status":pactive,
                 "password":puserpassword,
                 "designation":pdesignation

@@ -18,10 +18,13 @@ import { UserPlus } from 'lucide-react';
 import { Backpack } from 'lucide-react';
 import { Percent } from 'lucide-react';
 import { AddTaasks } from './AddTaasks'
-export const DashBoard = (props) => {
+import { Datainsert } from './datainsert'
+import { useLocation } from 'react-router-dom';
+export const DashBoard = () => {
+  const { state } = useLocation();
   const [on, setOn] = useState(1);
   const showdb = {
-    1: <NewDashboard />,
+    1: <Datainsert state={state.roll}/>,
     2: <StudentDetails />,
     3: <AddParents/>,
     4: <Attendance/>,
@@ -30,7 +33,7 @@ export const DashBoard = (props) => {
     7:<AddNotice/>,
     8: <AddTaasks/>
   }
-  console.log(props);
+  console.log(state.roll);
   return (
 
     <>
