@@ -9,9 +9,10 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from '../contextapi/auth-context.jsx';
 import { GraduationCap } from 'lucide-react';
 import { KeyRound } from 'lucide-react';
+import axios from 'axios';
 
 export const Login = (props) => {
-    const apis = new API();
+    
     const authContext = useContext(AuthContext)
     console.log(authContext.access);
     const navigate = useNavigate();
@@ -26,28 +27,25 @@ export const Login = (props) => {
         }
         console.log(data);
         try {
-            const { data: response } = await apis.login(data);
-            navigate('/',
-            {
-                state: {
-                    roll: username,
-                }
-            });
+            const { data: response } = await axios.post('http://127.0.0.1:8000/login',data);
+            localStorage.setItem('token', JSON.stringify(response.token));
+            localStorage.setItem('username', JSON.stringify(username));
+            navigate('/');
             setShow(true);
             console.log(response);
         } catch (error) {
             console.error(error.message);
         }
     }
-    const fetchdata = async ()=>{
-        console.log(true);
-        try {
-            const { data: response } = await apis.fetchStudentData(101);
-            console.log(response.students[0]);
-        } catch (error) {
-            console.error(error.message);
-        }
-    }
+    // const fetchdata = async ()=>{
+    //     console.log(true);
+    //     try {
+    //         const { data: response } = await apis.fetchStudentData(101);
+    //         console.log(response.students[0]);
+    //     } catch (error) {
+    //         console.error(error.message);
+    //     }
+    // }
     return (
         <Container style={{ fontFamily: "Open Sans", color: "black" }}>
 
@@ -88,7 +86,7 @@ export const Login = (props) => {
                         <Button style={{backgroundColor:"#6e44ff"}} type="submit" onClick={handleLogin}>Sign in</Button>
                     </Col>
                 </Form.Group>
-                { show? <h1 style={{color:"black"}} onClick={fetchdata}>logged in</h1>:<></>}
+                {/* { show? <h1 style={{color:"black"}} onClick={fetchdata}>logged in</h1>:<></>} */}
             </Form>
         </Container>
     )

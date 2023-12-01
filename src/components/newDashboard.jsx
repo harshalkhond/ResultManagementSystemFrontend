@@ -17,12 +17,11 @@ import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import Badge from 'react-bootstrap/Badge';
 import axios from 'axios';
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.withCredentials = true;
+import { useNavigate } from 'react-router-dom';
+
 export const NewDashboard = (props) => {
     const apis = new API();
-    console.log(props.state);
+    const navigate = useNavigate();
     const [dataBar, setdataBar] = useState([]);
     const [dataPie, setdataPie] = useState([]);
     const [subject, setSubject] = useState([]);
@@ -41,16 +40,21 @@ export const NewDashboard = (props) => {
     const [open, setOpen] = useState(false);
     const styles = { backgroundColor: "#A084E8", color: "black", border: "1px solid #A084E8", borderRadius: "26px" };
     useEffect(() => {
-
+        const tokens = JSON.parse(localStorage.getItem('token'));
+        const roll = JSON.parse(localStorage.getItem('username'));
+        if (tokens==null){
+            navigate('/login')
+        }
         const fetchData = async () => {
-
+            console.log(tokens);
+            console.log(roll);
             setTimeout(() => {
                 setLoading(false);
             }, 1000);
             let cid = 0;
             let pid = 0;
             try {
-                const { data: response } = await apis.fetchStudentData(props.state);
+                const { data: response } = await apis.fetchStudentData(roll);
                 setStdData(response.students[0]);
                 let dt = response.students[0];
                 setCourseid(dt.c_id);
@@ -68,13 +72,13 @@ export const NewDashboard = (props) => {
                 console.error(error.message);
             }
             try {
-                const { data: response } = await apis.fetchSubjectMarks(props.state);
+                const { data: response } = await apis.fetchSubjectMarks(roll);
                 setMarks(response.students);
             } catch (error) {
                 console.error(error.message);
             }
             try {
-                const { data: response } = await apis.fetchStudentResult(props.state);
+                const { data: response } = await apis.fetchStudentResult(roll);
                 let arr = []
                 arr.push(["Exam", "marks"])
                 response.students.map((key) => {
@@ -85,7 +89,7 @@ export const NewDashboard = (props) => {
                 console.error(error.message);
             }
             try {
-                const { data: response } = await apis.fetchAttendanceCount(props.state);
+                const { data: response } = await apis.fetchAttendanceCount(roll);
                 setdataPie([
                     ["Present", "Absent"],
                     ["Present", response.Present],

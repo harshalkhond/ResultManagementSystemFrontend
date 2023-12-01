@@ -24,7 +24,7 @@ export const DashBoard = () => {
   const { state } = useLocation();
   const [on, setOn] = useState(1);
   const showdb = {
-    1: <Datainsert state={state.roll}/>,
+    1: <NewDashboard/>,
     2: <StudentDetails />,
     3: <AddParents/>,
     4: <Attendance/>,
@@ -33,7 +33,6 @@ export const DashBoard = () => {
     7:<AddNotice/>,
     8: <AddTaasks/>
   }
-  console.log(state.roll);
   return (
 
     <>
