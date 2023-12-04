@@ -20,9 +20,19 @@ import { Percent } from 'lucide-react';
 import { AddTaasks } from './AddTaasks'
 import { Datainsert } from './datainsert'
 import { useLocation } from 'react-router-dom';
+import { useMediaPredicate } from "react-media-hook";
+import  Button  from 'react-bootstrap/Button'
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Menu } from 'lucide-react';
+
+
 export const DashBoard = () => {
   const { state } = useLocation();
   const [on, setOn] = useState(1);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () =>{ setShow(true); console.log("handle show") }
   const showdb = {
     1: <NewDashboard/>,
     2: <StudentDetails />,
@@ -33,12 +43,16 @@ export const DashBoard = () => {
     7:<AddNotice/>,
     8: <AddTaasks/>
   }
+  const biggerThan778 = useMediaPredicate("(min-width: 778px)");
+   const biggerThan768 = useMediaPredicate("(min-width: 768px)");
+   const biggerThan406 = useMediaPredicate("(min-width: 406px)");
   return (
-
+    
     <>
+    
       <Container className='mt-4' style={{ fontFamily: "Open Sans",borderRadius: "8px" }}>
         <Row className='mt-4'>
-          <Col className='col-2 pt-3' style={{  borderRadius: "12px", wordBreak: "break-all", maxHeight:"fit-content" }}>
+        <Col className='col-2 pt-3' style={{  borderRadius: "12px", wordBreak: "break-all", maxHeight:"fit-content" }}>
             <Nav fill variant="tabs" className='flex-sm-column'>
               <Nav.Item>
                 <b> <span onClick={(e) => { setOn(1) }} style={{ cursor: "pointer" }}>Home <Home style={{float:"right"}}/></span></b>
@@ -77,9 +91,9 @@ export const DashBoard = () => {
           <Col>
             {showdb[on]}
           </Col>
-
         </Row>
       </Container>
     </>
+   
   )
 }

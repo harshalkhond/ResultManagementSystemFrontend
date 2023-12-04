@@ -18,7 +18,9 @@ import Collapse from 'react-bootstrap/Collapse';
 import Badge from 'react-bootstrap/Badge';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { useMediaPredicate } from "react-media-hook";
+import Dropdown from 'react-bootstrap/Dropdown';
+import './newdashboard.css'
 export const NewDashboard = (props) => {
     const apis = new API();
     const navigate = useNavigate();
@@ -28,7 +30,7 @@ export const NewDashboard = (props) => {
     const [marks, setMarks] = useState([]);
     const [notices, setNotices] = useState([]);
     const [tasks, setTasks] = useState([]);
-    const [teacheername, setteachername] = useState("");
+    // const [teacheername, setteachername] = useState("");
     const [stddata, setStdData] = useState({});
     const [prdata, setPrData] = useState({});
     const [prid, setPrId] = useState({});
@@ -42,7 +44,7 @@ export const NewDashboard = (props) => {
     useEffect(() => {
         const tokens = JSON.parse(localStorage.getItem('token'));
         const roll = JSON.parse(localStorage.getItem('username'));
-        if (tokens==null){
+        if (tokens == null) {
             navigate('/login')
         }
         const fetchData = async () => {
@@ -58,7 +60,7 @@ export const NewDashboard = (props) => {
                 setStdData(response.students[0]);
                 let dt = response.students[0];
                 setCourseid(dt.c_id);
-                pid=dt.p_id;
+                pid = dt.p_id;
                 setPrId(dt.p_id);
                 cid = dt.c_id;
             } catch (error) {
@@ -132,19 +134,36 @@ export const NewDashboard = (props) => {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    const logoutUser = () =>{
+        apis.logout();
+        navigate('/login');
+    }
     // console.log(subject)
     console.log(tasks)
+    const biggerThan768 = useMediaPredicate("(min-width: 768px)");
+    const biggerThan406 = useMediaPredicate("(min-width: 406px)");
     return (
         <>
-            <Container className='px-3 py-3' style={{ fontFamily: "Open Sans", backgroundColor: "#e9ecef", color: "white", borderRadius: "12px" }}>
+            <Container className={biggerThan768 ? 'px-3 py-3' : 'py-3'} style={{ fontFamily: "Open Sans", backgroundColor: "#e9ecef", color: "white", borderRadius: "12px" }}>
                 <Row >
-                    <Col className='col-1 py-2 mx-3' style={{ backgroundColor: "#815ac0", borderRadius: "12px" }}>
-                        <Home className='mx-3' />
+                    <Col className='col py-2 mx-3' style={{ borderRadius: "12px", maxWidth: "47px" }}>
+                        <Home className='' style={{ color: "black", width: "40px", height: "40px" }} />
 
                     </Col>
-                    <Col className='col-1 py-2' style={{ color: "black" }}>
-                        <span>DashBoard</span>
+                    <Col className='col-10 py-1' style={{ color: "black" }}>
+                        <b> <span style={{ fontSize: "30px", paddingTop: "5px" }} >DashBoard</span></b>
+                        <div class="dropdown" style={{ color: "black", float: "right" }}>
+                        <span >
+                            <img src='https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg' alt="img" style={{ width: "55px", height: "55px", borderRadius: "50%" }} />
+                        </span>
+                            <div class="dropdown-content">
+                                <p>Profile</p>
+                                <p>Scorecards</p>
+                                <p onClick={logoutUser}>Logout</p>
+                            </div>
+                        </div>
                     </Col>
+
                 </Row>
                 <Row>
                     <Col>
@@ -179,9 +198,9 @@ export const NewDashboard = (props) => {
                                 <Table hover>
                                     <thead >
                                         <tr>
-                                            <th style={{backgroundColor:"#ff477e", color:"white"}}>Student Info</th>
-                                            <th style={{backgroundColor:"#ff477e"}}></th>
-                                            <th style={{backgroundColor:"#ff477e"}}></th>
+                                            <th style={{ backgroundColor: "#ff477e", color: "white" }}>Student Info</th>
+                                            <th style={{ backgroundColor: "#ff477e" }}></th>
+                                            <th style={{ backgroundColor: "#ff477e" }}></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -206,9 +225,9 @@ export const NewDashboard = (props) => {
                                 <Table hover>
                                     <thead>
                                         <tr>
-                                            <th style={{backgroundColor:"#49b6ff", color:"white"}}> Parents Info</th>
-                                            <th style={{backgroundColor:"#49b6ff", color:"white"}}></th>
-                                            <th style={{backgroundColor:"#49b6ff", color:"white"}}></th>
+                                            <th style={{ backgroundColor: "#49b6ff", color: "white" }}> Parents Info</th>
+                                            <th style={{ backgroundColor: "#49b6ff", color: "white" }}></th>
+                                            <th style={{ backgroundColor: "#49b6ff", color: "white" }}></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -221,11 +240,11 @@ export const NewDashboard = (props) => {
                                             <td colSpan={2}>{prdata.mobile}</td>
                                         </tr>
                                         <tr>
-                                            <td><b>Email Id</b></td>                              
+                                            <td><b>Email Id</b></td>
                                             <td colSpan={2}>{prdata.email}</td>
                                         </tr>
                                         <tr>
-                                            <td><b>Alternate mobile</b></td>                                
+                                            <td><b>Alternate mobile</b></td>
                                             <td colSpan={2}>{prdata.phone}</td>
                                         </tr>
                                     </tbody>
@@ -323,6 +342,7 @@ export const NewDashboard = (props) => {
                     </Col>
                 </Row>
             </Container>
+
         </>
     )
 }
