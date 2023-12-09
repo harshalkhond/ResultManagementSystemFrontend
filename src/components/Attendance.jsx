@@ -1,15 +1,15 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import { Form, Button, Row, Col, Container } from 'react-bootstrap'
-import { Baseurl } from '../Constants/urls';
+import { API } from '../API/apis.ts';
 
 export const Attendance = () => {
+    const apis = new API();
     const [roll , setRoll] = useState(0);
     const [date , setDate] = useState(new Date())
     const [description, setDescription]=useState("")
     const [attendance, setAttendance]=useState("Absent")
 
-    const submitAttendance = ()=>{
+    const submitAttendance = async ()=>{
         const data = {
             date : date,
             std_id : roll,
@@ -17,11 +17,17 @@ export const Attendance = () => {
             absent : (attendance==="Absent"?true:false),
             remarks : description
         }
-        axios.post(Baseurl+'Attendance' , data).then((res)=>{
-            console.log(res);
-        }).catch((err)=>{
-            console.log(err);
-        })
+        try {
+          const { data: response } = await apis.submitAttendance(data);
+          //console.log(response)
+      } catch (error) {
+          console.error(error.message);
+      }
+        // apis.submitAttendance(data).then((res)=>{
+        //     console.log(res);
+        // }).catch((err)=>{
+        //     console.log(err);
+        // })
     }
   return (
     <Container >

@@ -7,7 +7,6 @@ import { AddStudent } from './addStudent'
 import { StudentDetails } from './StudentDetails'
 import { AddParents } from './addParents'
 import { Attendance } from './Attendance'
-import { LandingDashBoard } from './LandingDashBoard'
 import { AddNotice } from './addNotice'
 import { NewDashboard } from './newDashboard'
 import { Submitmarks } from './submitmarks'
@@ -17,35 +16,28 @@ import { UserPlus2 } from 'lucide-react';
 import { UserPlus } from 'lucide-react';
 import { Backpack } from 'lucide-react';
 import { Percent } from 'lucide-react';
-import { AddTaasks } from './AddTaasks'
-import { Datainsert } from './datainsert'
-import { useLocation } from 'react-router-dom';
-import { useMediaPredicate } from "react-media-hook";
-import  Button  from 'react-bootstrap/Button'
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import { Menu } from 'lucide-react';
+import { AddTaasks } from './AddTaasks';
+import { LoadData } from './loadData'
+// import { useMediaPredicate } from "react-media-hook";
+
 
 
 export const DashBoard = () => {
-  const { state } = useLocation();
   const [on, setOn] = useState(1);
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () =>{ setShow(true); console.log("handle show") }
   const showdb = {
-    1: <NewDashboard/>,
+    1: <LoadData state={setOn} />,
     2: <StudentDetails />,
     3: <AddParents/>,
     4: <Attendance/>,
     5: <AddStudent/>,
     6: <Submitmarks/>,
     7:<AddNotice/>,
-    8: <AddTaasks/>
-  }
-  const biggerThan778 = useMediaPredicate("(min-width: 778px)");
-   const biggerThan768 = useMediaPredicate("(min-width: 768px)");
-   const biggerThan406 = useMediaPredicate("(min-width: 406px)");
+    8: <AddTaasks/>,
+    9: <NewDashboard/>,  }
+  // const biggerThan778 = useMediaPredicate("(min-width: 778px)");
+  //  const biggerThan768 = useMediaPredicate("(min-width: 768px)");
+  //  const biggerThan406 = useMediaPredicate("(min-width: 406px)");
   return (
     
     <>

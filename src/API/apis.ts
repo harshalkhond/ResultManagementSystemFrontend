@@ -35,8 +35,10 @@ export class API{
     private posttaskurl = Baseurl + 'task'
     private registerurl = Baseurl + 'register'
     private taskurl = Baseurl + 'task?cid='
-    public fetchStudentData = (roll: string | number)=>{ 
-          return axios.get(this.studentdata+roll,this.header);
+    public fetchStudentData = (roll: string | number,name: string | undefined)=>{ 
+        let url = Baseurl+'students?roll=' + roll + "&name=" + name;
+        // console.log("caleed")
+          return axios.get(url,this.header);
      }
      public fetchStudentResult = (roll: string | number)=>{ 
         return axios.get(this.result+roll,this.header);
@@ -54,7 +56,10 @@ export class API{
         return axios.post(this.substudentdata,data,this.header);
         }
     public getCourses = (cid=0)=>{ 
-            return axios.get(this.getcourseurl+cid,this.header);
+            return axios.get(this.getcourseurl+cid,{headers: {
+                'content-type': 'multipart/form-data',
+                "Authorization": this.getToken()
+              }});
             }
     public fetchTeachersData = ()=>{ 
         return axios.get(this.getteachersddataurl,this.header);
@@ -99,4 +104,7 @@ export class API{
                 localStorage.clear();
             return {"status":"success"}
             }
+        public submitAttendance = (data)=>{
+                return  axios.post(Baseurl+'Attendance' , data, this.header);
+        }
     }

@@ -31,12 +31,13 @@ export const AddStudent = () => {
     const [coursesub, setCourseSub] = useState([]);
     const [courses, setCourses] = useState([]);
     const [show, setShow] = useState(false);
-
+    const [file, setFile] = useState(null);
+    
 
     const apis = new API();
 
     useEffect(() => {
-        
+
         const fetchData = async () => {
 
             let teacheropt = "<option key='student' value='select'>Select</option>";
@@ -67,29 +68,29 @@ export const AddStudent = () => {
 
     console.log(coursesub);
 
-
+    const formData = new FormData();
 
     const submitData = () => {
         if (authenticated) {
-            let data = {
-                "Name": name,
-                "RollNo": roll,
-                "Class": clas,
-                "Reportsto": reports,
-                "email": email,
-                "fname": fname,
-                "lname": lname,
-                "dob": dob,
-                "phone": phnum,
-                "mobile": mobnum,
-                "p_id": ParentId,
-                "status": active,
-                "password": userpassword,
-                "designation": designation,
-                "c_id": course
-            }
-            console.log(data);
-            apis.SubmitStudentData(data).then((res) => {
+            console.log(file);
+            formData.append("photo",file,file.name);
+            formData.append("Name", name)
+            formData.append("RollNo", roll)
+            formData.append( "Class", clas)
+            formData.append("Reportsto", "abhinav")
+            formData.append("email", email)
+            formData.append("fname", fname)
+            formData.append("lname", lname)
+            formData.append("dob", dob)
+            formData.append("phone", phnum)
+            formData.append("mobile", mobnum)
+            formData.append("p_id", ParentId)
+            formData.append("status", active)
+            formData.append("password", userpassword)
+            formData.append("designation", designation)
+            formData.append("c_id", course)
+            console.log(formData);
+            apis.SubmitStudentData(formData).then((res) => {
                 console.log(res);
             }).catch((err) => {
                 console.log(err);
@@ -112,6 +113,11 @@ export const AddStudent = () => {
 
     const showSubjects = async (e) => {
         setCourse(e.target.value);
+        for (let key in courses){
+            if (key.c_id === e.target.value){
+                setClas(key.name);
+            }
+        }
         try {
             const { data: response } = await apis.fetchSubjects(e.target.value);
             console.log(response.students);
@@ -126,8 +132,8 @@ export const AddStudent = () => {
     return (
 
         <>
-            <Container className='text-white py-3'  style={{fontFamily: "Open Sans", backgroundColor: "#e9ecef" , borderRadius: "12px" }}>
-                <Form className='mb-5' style={{color:"black"}}>
+            <Container className='text-white py-3' style={{ fontFamily: "Open Sans", backgroundColor: "#e9ecef", borderRadius: "12px" }}>
+                <Form className='mb-5' style={{ color: "black" }}>
                     <Row>
                         <Col xs={7}>
                             <Form.Label>Username</Form.Label>
@@ -146,7 +152,7 @@ export const AddStudent = () => {
                 </Form>
 
 
-                <Form className='mb-3' style={{color:"black"}}>
+                <Form className='mb-3' style={{ color: "black" }}>
                     <Form.Label> <h4> Student Data </h4></Form.Label>
                     <Row>
                         <Col className='col-4'>
@@ -158,13 +164,15 @@ export const AddStudent = () => {
                             <Form.Control type='number' placeholder="Enter Roll No" onChange={(e) => { setRoll(e.target.value) }} />
                         </Col>
                         <Col>
-                            <Form.Label>Class</Form.Label>
-                            <Form.Control placeholder="Enter Class" onChange={(e) => { setClas(e.target.value) }} />
+                            <Form.Group controlId="formFile" className="mb-3">
+                                <Form.Label>Choose profile image</Form.Label>
+                                <Form.Control type="file" onChange={(e)=>{setFile(e.target.files[0])}} />
+                            </Form.Group>
                         </Col>
                     </Row>
                 </Form>
 
-                <Form className='mb-3' style={{color:"black"}}>
+                <Form className='mb-3' style={{ color: "black" }}>
 
                     <Row>
                         <Col className='col-4'>
@@ -182,7 +190,7 @@ export const AddStudent = () => {
                     </Row>
                 </Form>
 
-                <Form className='mb-3' style={{color:"black"}}>
+                <Form className='mb-3' style={{ color: "black" }}>
 
                     <Row>
                         <Col className='col-4'>
@@ -198,8 +206,8 @@ export const AddStudent = () => {
                             <Form.Control placeholder="Enter Parent Id" onChange={(e) => { setParentId(e.target.value) }} />
                         </Col>
                     </Row>
-                </Form> 
-                <Form className='mb-3' style={{color:"black"}}>
+                </Form>
+                <Form className='mb-3' style={{ color: "black" }}>
 
                     <Row>
                         <Col className='col-4'>

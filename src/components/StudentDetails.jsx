@@ -13,8 +13,10 @@ import { StudentData } from './StudentData';
 import { Baseurl } from '../Constants/urls';
 import Table from 'react-bootstrap/Table'
 import Badge from 'react-bootstrap/Badge';
+import { API } from '../API/apis.ts';
 export const StudentDetails = (state) => {
   console.log(state)
+  const apis = new API();
   const [data, setData] = useState([{
     Name: ""
   }]);
@@ -25,11 +27,12 @@ export const StudentDetails = (state) => {
   const [arr, setArr] = useState([]);
   useEffect(() => {
   }, []);
+  
   const fetchData = async () => {
     console.log("funcion triggered")
     setLoading(true);
     try {
-      const { data: response } = await axios.get(Baseurl + 'students?name=' + name + '&roll=' + roll);
+      const { data: response } = await apis.fetchStudentData(roll,name);
       setData(response.students);
       console.log(response)
     } catch (error) {
