@@ -11,10 +11,10 @@ export const LoadData = (props) => {
     const apis = new API();
     const navigate = useNavigate();
     const data = useSelector((state) => state.value)
-    // console.log(data);
+
     const dispatch = useDispatch()
     if (data.hasOwnProperty('tasks')){
-        props.state(9)
+        navigate("/dashboard");
     }
     useEffect(() => {
         const tokens = JSON.parse(localStorage.getItem('token'));

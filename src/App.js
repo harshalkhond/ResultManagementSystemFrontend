@@ -12,7 +12,6 @@ import { Login } from './components/Login';
 import AuthContext from './contextapi/auth-context';
 import { Profile } from './components/Profile';
 import { LoadData } from './components/loadData';
-import { NewDashboard } from './components/newDashboard';
 import { useState } from 'react';
 function App() {
   const [authstatus, setauthstatus] = useState(false);
@@ -34,12 +33,10 @@ function App() {
     <AuthContext.Provider value={{ status: authstatus,access:token,refresh:refresh, login: login, setAccessToken:setAccessToken, getToken:getToken }}>
         <Router>
         <Routes>
-
+                <Route exact path='/' element={<LoadData/>}></Route>
                 <Route exact path='/usertype' element={< LandingLogin />}></Route>
                 <Route exact path='/Stddetails' element={< StudentDetails />}></Route>
                 <Route exact path='/profile' element={< Profile />}></Route>
-
-                <Route exact path='/' element={<LoadData/>}></Route>
                 <Route exact path='/newDashboard' element={<LoadData/>}></Route>
                 <Route exact path='/dashboard' element={<DashBoard/>}></Route>
                 <Route exact path='/home' element={<LandingDashBoard/>}></Route>

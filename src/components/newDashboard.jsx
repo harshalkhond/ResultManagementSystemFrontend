@@ -16,14 +16,13 @@ import Collapse from 'react-bootstrap/Collapse';
 import Badge from 'react-bootstrap/Badge';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import './newdashboard.css';
+import { useSelector } from 'react-redux';
 // import { useMediaPredicate } from "react-media-hook";
-import './newdashboard.css'
-import { useSelector, useDispatch } from 'react-redux'
-import { updateData } from '../redux/counterrSlice'
 
 export const NewDashboard = (props) => {
     const navigate = useNavigate();
-    const data = useSelector((state) => state.value)
+    const data = useSelector((state) => state.value);
     console.log(data)
     if (!data.hasOwnProperty('tasks')){
         navigate('/')
